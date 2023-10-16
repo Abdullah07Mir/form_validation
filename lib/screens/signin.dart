@@ -20,56 +20,98 @@ class SignInPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BlocBuilder<SignBloc, SigninState>(
-              builder: (context, state) {
-                if (state is SigninErrorState) {
-                  return Text(
-                    state.errorMsg,
-                    style: TextStyle(color: Colors.red),
-                  );
-                } else {
-                  return Container();
-                }
-              },
-            ),
+            // BlocBuilder<SignBloc, SigninState>(
+            //   builder: (context, state) {
+            //     if (state is SigninEmailErrorState) {
+            //       return Text(
+            //         state.errormsg,
+            //         style: TextStyle(color: Colors.red),
+            //       );
+            //     }
+
+            //      else {
+            //       return Container();
+            //     }
+            //   },
+            // ),
             SizedBox(
               height: 10,
             ),
             TextField(
               controller: emailController,
               onChanged: (val) {
-                BlocProvider.of<SignBloc>(context).add(SignInChangedEvent(emailController.text.trim(), passwordController.text.trim()));
+                BlocProvider.of<SignBloc>(context).add(SignInChangedEvent(
+                    emailController.text.trim(),
+                    passwordController.text.trim()));
               },
               decoration: InputDecoration(
                 labelText: 'Email',
               ),
             ),
+            BlocBuilder<SignBloc, SigninState>(
+              builder: (context, state) {
+                if (state is SigninEmailErrorState) {
+                  return Text(
+                    state.errormsg,
+                    style: TextStyle(color: Colors.red),
+                  );
+                }
+
+                 else {
+                  return Container();
+                }
+              },
+            ),
             SizedBox(height: 16.0),
             TextField(
               controller: passwordController,
               onChanged: (val) {
-                BlocProvider.of<SignBloc>(context).add(SignInChangedEvent(emailController.text.trim(), passwordController.text.trim()));
+                BlocProvider.of<SignBloc>(context).add(SignInChangedEvent(
+                    emailController.text.trim(),
+                    passwordController.text.trim()));
               },
               obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Password',
               ),
             ),
+            BlocBuilder<SignBloc, SigninState>(
+              builder: (context, state) {
+                if (state is SigninPasswordErrorState) {
+                  return Text(
+                    state.errorMsg,
+                    style: TextStyle(color: Colors.red),
+                  );
+                }
+
+                 else {
+                  return Container();
+                }
+              },
+            ),
+
             SizedBox(height: 16.0),
             BlocBuilder<SignBloc, SigninState>(
               builder: (context, state) {
-                if(state is SiginLoadingState){
-                  return Center(child: CircularProgressIndicator(),);
+                if (state is SiginLoadingState) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
                 }
                 return ElevatedButton(
                   onPressed: () {
                     // Handle sign-in action
-                    if(state is SigninValidState){
-                         BlocProvider.of<SignBloc>(context).add(SignSubmittedEvent(emailController.text.trim(), passwordController.text.trim()));
+                    if (state is SigninValidState) {
+                      BlocProvider.of<SignBloc>(context).add(SignSubmittedEvent(
+                          emailController.text.trim(),
+                          passwordController.text.trim()));
                     }
                   },
                   child: Text('Sign In'),
-                  style: ElevatedButton.styleFrom(backgroundColor: (state is SigninValidState)? Colors.blue : Colors.grey),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: (state is SigninValidState)
+                          ? Colors.blue
+                          : Colors.grey),
                 );
               },
             ),

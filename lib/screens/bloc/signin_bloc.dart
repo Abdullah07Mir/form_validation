@@ -7,11 +7,11 @@ import 'package:form_validation/screens/bloc/signin_state_bloc.dart';
 class SignBloc extends Bloc<SignInEvent, SigninState>{
   SignBloc(): super(SigninInitialState()){
     on<SignInChangedEvent>((event, emit) => {
-      if( EmailValidator.validate(event.emailvalue)== false){
-        emit(SigninErrorState('Please enter valid email'))
+      if(EmailValidator.validate(event.emailvalue)== false){
+        emit(SigninEmailErrorState('Please enter valid email'))
       }
       else if(event.Passwordvalue.length<8){
-        emit(SigninErrorState('please enter valid password'))
+        emit(SigninPasswordErrorState('please enter valid password'))
       }
       else{
         emit(SigninValidState())

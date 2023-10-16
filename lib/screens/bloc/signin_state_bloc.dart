@@ -9,9 +9,13 @@ class SigninInvalidState extends SigninState{
 class SigninValidState extends SigninState{
 
 }
-class SigninErrorState extends SigninState{
+class SigninEmailErrorState extends SigninState{
+ final String errormsg;
+  SigninEmailErrorState(this.errormsg);
+}
+class SigninPasswordErrorState extends SigninState{
  final String errorMsg;
-  SigninErrorState(this.errorMsg);
+  SigninPasswordErrorState(this.errorMsg);
 }
 
 class SiginLoadingState extends SigninState{}
